@@ -8,10 +8,10 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/but80/go-smaf/enums"
-	"github.com/but80/go-smaf/subtypes"
-	"github.com/but80/go-smaf/util"
-	"github.com/but80/go-smaf/voice"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	"gopkg.in/but80/go-smaf.v1/subtypes"
+	"gopkg.in/but80/go-smaf.v1/util"
+	"gopkg.in/but80/go-smaf.v1/voice"
 	"github.com/pkg/errors"
 )
 

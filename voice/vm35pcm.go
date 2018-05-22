@@ -5,8 +5,8 @@ import (
 	"io"
 	"unsafe"
 
-	pb "github.com/but80/go-smaf/pb/smaf"
-	"github.com/but80/go-smaf/util"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
+	"gopkg.in/but80/go-smaf.v1/util"
 	"github.com/pkg/errors"
 )
 

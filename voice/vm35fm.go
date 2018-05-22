@@ -9,10 +9,10 @@ import (
 	"strings"
 	"unsafe"
 
-	pb "github.com/but80/go-smaf/pb/smaf"
-	"github.com/but80/go-smaf/enums"
-	"github.com/but80/go-smaf/log"
-	"github.com/but80/go-smaf/util"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	"gopkg.in/but80/go-smaf.v1/log"
+	"gopkg.in/but80/go-smaf.v1/util"
 	"github.com/pkg/errors"
 )
 

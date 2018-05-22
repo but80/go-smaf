@@ -4,8 +4,8 @@ import (
 	"io"
 	"strings"
 
-	"github.com/but80/go-smaf/enums"
-	"github.com/but80/go-smaf/util"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	"gopkg.in/but80/go-smaf.v1/util"
 	"github.com/pkg/errors"
 )
 

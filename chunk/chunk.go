@@ -7,9 +7,9 @@ import (
 	"io"
 	"unsafe"
 
-	"github.com/but80/go-smaf/enums"
-	"github.com/but80/go-smaf/log"
-	"github.com/but80/go-smaf/subtypes"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	"gopkg.in/but80/go-smaf.v1/log"
+	"gopkg.in/but80/go-smaf.v1/subtypes"
 	"github.com/pkg/errors"
 )
 

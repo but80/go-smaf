@@ -7,11 +7,11 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/but80/go-smaf/enums"
-	"github.com/but80/go-smaf/event"
-	"github.com/but80/go-smaf/huffman"
-	"github.com/but80/go-smaf/log"
-	"github.com/but80/go-smaf/util"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	"gopkg.in/but80/go-smaf.v1/event"
+	"gopkg.in/but80/go-smaf.v1/huffman"
+	"gopkg.in/but80/go-smaf.v1/log"
+	"gopkg.in/but80/go-smaf.v1/util"
 	"github.com/pkg/errors"
 )
 

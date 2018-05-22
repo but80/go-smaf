@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/but80/go-smaf/log"
+	"gopkg.in/but80/go-smaf.v1/log"
 )
 
 type Note int

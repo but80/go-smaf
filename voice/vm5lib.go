@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unsafe"
 
-	pb "github.com/but80/go-smaf/pb/smaf"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 	"github.com/pkg/errors"
 )
 
