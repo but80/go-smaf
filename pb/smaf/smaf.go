@@ -185,7 +185,7 @@ func (op *VM35FMOperator) Normalize() bool {
 	normalizeUint32(&ok, &op.Sr, 0, 15)
 	normalizeUint32(&ok, &op.Rr, 0, 15)
 	normalizeUint32(&ok, &op.Sl, 0, 15)
-	normalizeUint32(&ok, &op.Tl, 0, 31)
+	normalizeUint32(&ok, &op.Tl, 0, 63)
 	normalizeUint32(&ok, &op.Ksl, 0, 3)
 	normalizeUint32(&ok, &op.Dam, 0, 3)
 	normalizeUint32(&ok, &op.Dvb, 0, 3)
