@@ -33,6 +33,7 @@ type VMAFMOperator struct {
 	AM   bool             `json:"am"`   // AM
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (op *VMAFMOperator) Read(rdr io.Reader, rest *int) error {
 	//    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 	// +0 |     MULT      |VIB|EGT|SUS|KSR|
@@ -103,6 +104,7 @@ func (op *VMAFMOperator) String() string {
 	return fmt.Sprintf("Op #%d: MULT=%s\n", op.Num+1, op.MULT) + util.Indent(s, "\t")
 }
 
+// ToVM35 は、この構造体の内容をMA-3/MA-5用の音色データに変換します。
 func (op *VMAFMOperator) ToVM35(fb int) *VM35FMOperator {
 	sr := op.RR
 	if op.EGT {
@@ -138,6 +140,7 @@ type VMAFMVoice struct {
 	Operators [4]*VMAFMOperator `json:"operators"`
 }
 
+// NewVMAFMVoice は、指定したバイト列をパースして新しい VMAFMVoice を作成します。
 func NewVMAFMVoice(data []byte) (*VMAFMVoice, error) {
 	voice := &VMAFMVoice{}
 	rest := len(data)
@@ -158,6 +161,7 @@ func NewVMAFMVoice(data []byte) (*VMAFMVoice, error) {
 	return voice, nil
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (v *VMAFMVoice) Read(rdr io.Reader, rest *int) error {
 	//    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 	// +0 |  LFO  |    F B    |    ALG    |
@@ -235,6 +239,7 @@ func (v *VMAFMVoice) String() string {
 	return strings.Join(s, "\n")
 }
 
+// ToVM35 は、この構造体の内容をMA-3/MA-5用の音色データに変換します。
 func (v *VMAFMVoice) ToVM35() *VM35FMVoice {
 	result := &VM35FMVoice{
 		DrumKey:   enums.Note(0),

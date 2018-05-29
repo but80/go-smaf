@@ -15,6 +15,7 @@ type sequenceBuilderContext struct {
 	lastVelocity [16]int
 }
 
+// NewSequenceBuilderContext は、新しい sequenceBuilderContext を作成します。
 func NewSequenceBuilderContext() *sequenceBuilderContext {
 	ctx := &sequenceBuilderContext{lastVelocity: [16]int{}}
 	ctx.reset()

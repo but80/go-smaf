@@ -30,6 +30,7 @@ func (c *OptionalDataChunk) String() string {
 	return result + "\n" + util.Indent(strings.Join(sub, "\n"), "\t")
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *OptionalDataChunk) Read(rdr io.Reader) error {
 	rest := int(c.ChunkHeader.Size)
 	c.SubChunks = []Chunk{}

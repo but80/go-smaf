@@ -53,6 +53,7 @@ func (hdr *ChunkHeader) String() string {
 	return fmt.Sprintf("%s, %d bytes", ss, hdr.Size)
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (hdr *ChunkHeader) Read(rdr io.Reader, rest *int) error {
 	err := binary.Read(rdr, binary.BigEndian, hdr)
 	if err != nil {

@@ -13,6 +13,7 @@ type BitReader struct {
 	rest   int
 }
 
+// NewBitReader は、新しい BitReader を作成します。
 func NewBitReader(rdr io.Reader) *BitReader {
 	return &BitReader{reader: rdr}
 }

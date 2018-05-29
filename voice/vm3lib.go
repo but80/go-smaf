@@ -14,6 +14,7 @@ type VM3VoiceLib struct {
 	Programs []*VM35VoicePC `json:"programs"`
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (lib *VM3VoiceLib) Read(rdr io.Reader, rest *int) error {
 	lib.Programs = []*VM35VoicePC{}
 	for pc := 0; pc < 128 && 0 < *rest; pc++ {
@@ -35,6 +36,7 @@ func (lib *VM3VoiceLib) String() string {
 	return strings.Join(s, "\n")
 }
 
+// NewVM3VoiceLib は、指定したファイル内容をパースして新しい VM3VoiceLib を作成します。
 func NewVM3VoiceLib(file string) (*VM3VoiceLib, error) {
 	fh, err := os.Open(file)
 	if err != nil {

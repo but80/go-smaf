@@ -119,6 +119,7 @@ func (c *ScoreTrackSequenceDataChunk) String() string {
 	return result + "\n" + util.Indent(strings.Join(sub, "\n"), "\t")
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *ScoreTrackSequenceDataChunk) Read(rdr io.Reader) error {
 	var err error
 	rest := int(c.Size)

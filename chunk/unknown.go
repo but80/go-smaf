@@ -20,6 +20,7 @@ func (c *UnknownChunk) String() string {
 	return result
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *UnknownChunk) Read(rdr io.Reader) error {
 	c.Stream = make([]uint8, c.ChunkHeader.Size)
 	n, err := rdr.Read(c.Stream)

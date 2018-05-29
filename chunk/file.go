@@ -75,6 +75,7 @@ func calcCRC(rdr io.Reader, len int) (uint16, error) {
 	return crc ^ 0xFFFF, nil
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *FileChunk) Read(rdr io.Reader) error {
 	c.SubChunks = []Chunk{}
 
@@ -163,6 +164,7 @@ func (c *FileChunk) CollectExclusives() *CollectedExclusives {
 	return voices
 }
 
+// NewFileChunk は、新しい FileChunk を作成します。
 func NewFileChunk(file string) (*FileChunk, error) {
 	fh, err := os.Open(file)
 	if err != nil {

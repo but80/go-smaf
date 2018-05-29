@@ -22,6 +22,7 @@ type Exclusive struct {
 	Data           []uint8             `json:"data"`
 }
 
+// NewExclusive は、新しい Exclusive を作成します。
 func NewExclusive(variableLength bool) *Exclusive {
 	return &Exclusive{
 		variableLength: variableLength,
@@ -45,6 +46,7 @@ func (x *Exclusive) String() string {
 	return result + "\n" + util.Indent(strings.Join(sub, "\n"), "\t")
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (x *Exclusive) Read(rdr io.Reader, rest *int) error {
 	var err error
 	var length int

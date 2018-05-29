@@ -53,6 +53,7 @@ type vm5VoicePCHeaderRawData struct {
 	VoiceType uint8 // bit0: 0=Type=FM 1=Type=PCM
 }
 
+// ToPB は、この構造体の内容を Protocol Buffer 形式で出力可能な型に変換します。
 func (p *VM35VoicePC) ToPB() *pb.VM35VoicePC {
 	result := &pb.VM35VoicePC{
 		Version:   pb.VM35FMVoiceVersion(p.Version),
@@ -72,6 +73,7 @@ func (p *VM35VoicePC) ToPB() *pb.VM35VoicePC {
 	return result
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (p *VM35VoicePC) Read(rdr io.Reader, rest *int) error {
 	switch p.Version {
 	case VM35FMVoiceVersion_VM5:

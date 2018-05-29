@@ -80,6 +80,7 @@ func (d *HuffmanDecoder) Read(p []byte) (int, error) {
 	return size, nil
 }
 
+// NewHuffmanDecoder は、新しい HuffmanDecoder を作成します。
 func NewHuffmanDecoder(rdr io.Reader) *HuffmanDecoder {
 	return &HuffmanDecoder{
 		reader: NewBitReader(rdr),
@@ -92,6 +93,7 @@ type HuffmanReader struct {
 	buf     []byte
 }
 
+// NewHuffmanReader は、新しい HuffmanReader を作成します。
 func NewHuffmanReader(rdr io.Reader) *HuffmanReader {
 	return &HuffmanReader{
 		reader:  rdr,

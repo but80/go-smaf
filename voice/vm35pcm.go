@@ -35,12 +35,14 @@ type VM35PCMVoice struct {
 	RawData [19]byte `json:"raw_data"`
 }
 
+// ToPB は、この構造体の内容を Protocol Buffer 形式で出力可能な型に変換します。
 func (v *VM35PCMVoice) ToPB() *pb.VM35PCMVoice {
 	return &pb.VM35PCMVoice{
 		RawData: v.RawData[:],
 	}
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (v *VM35PCMVoice) Read(rdr io.Reader, rest *int) error {
 	err := binary.Read(rdr, binary.BigEndian, &v.RawData)
 	if err != nil {

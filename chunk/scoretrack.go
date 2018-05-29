@@ -81,6 +81,7 @@ func timeBase(b uint8) int {
 	}
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *ScoreTrackChunk) Read(rdr io.Reader) error {
 	rest := int(c.ChunkHeader.Size)
 	var rawHeader scoreTrackRawHeader

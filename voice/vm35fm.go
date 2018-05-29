@@ -47,6 +47,7 @@ type VM35FMOperator struct {
 	EVB     bool               `json:"evb"`   // Enable Vibrato
 }
 
+// ToPB は、この構造体の内容を Protocol Buffer 形式で出力可能な型に変換します。
 func (op *VM35FMOperator) ToPB() *pb.VM35FMOperator {
 	return &pb.VM35FMOperator{
 		Multi: uint32(op.MULTI),
@@ -70,6 +71,7 @@ func (op *VM35FMOperator) ToPB() *pb.VM35FMOperator {
 	}
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (op *VM35FMOperator) Read(rdr io.Reader, rest *int) error {
 	//    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 	// +0 |      S R      |XOF| - |SUS|KSR|
@@ -167,6 +169,7 @@ type VM35FMVoice struct {
 	Operators [4]*VM35FMOperator `json:"operators"`
 }
 
+// NewVM35FMVoice は、指定したバイト列をパースして新しい VM35FMVoice を作成します。
 func NewVM35FMVoice(data []byte, version VM35FMVoiceVersion) (*VM35FMVoice, error) {
 	voice := &VM35FMVoice{Version: version}
 	rest := len(data)
@@ -185,6 +188,7 @@ func NewVM35FMVoice(data []byte, version VM35FMVoiceVersion) (*VM35FMVoice, erro
 	return voice, nil
 }
 
+// ToPB は、この構造体の内容を Protocol Buffer 形式で出力可能な型に変換します。
 func (v *VM35FMVoice) ToPB() *pb.VM35FMVoice {
 	result := &pb.VM35FMVoice{
 		DrumKey:   uint32(v.DrumKey),
@@ -201,6 +205,7 @@ func (v *VM35FMVoice) ToPB() *pb.VM35FMVoice {
 	return result
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (v *VM35FMVoice) Read(rdr io.Reader, rest *int) error {
 	switch v.Version {
 	case VM35FMVoiceVersion_VM3Exclusive:
@@ -353,6 +358,7 @@ func (v *VM35FMVoice) String() string {
 	return strings.Join(s, "\n")
 }
 
+// NewDemoVM35FMVoice は、デモ音色として初期化された新しい VM35FMVoice を作成します。
 func NewDemoVM35FMVoice() *VM35FMVoice {
 	v := &VM35FMVoice{
 		Version:   VM35FMVoiceVersion_VM5,

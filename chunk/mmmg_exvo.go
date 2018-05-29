@@ -32,6 +32,7 @@ func (c *MMMGEXVOChunk) String() string {
 	return result + "\n" + util.Indent(strings.Join(sub, "\n"), "\t")
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (c *MMMGEXVOChunk) Read(rdr io.Reader) error {
 	c.Stream = make([]uint8, c.ChunkHeader.Size)
 	_, err := rdr.Read(c.Stream)

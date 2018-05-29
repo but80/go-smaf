@@ -28,6 +28,7 @@ type vmaVoicePCHeaderRawData struct {
 	PC     uint8
 }
 
+// Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (p *VMAVoicePC) Read(rdr io.Reader, rest *int) error {
 	var data vmaVoicePCHeaderRawData
 	err := binary.Read(rdr, binary.BigEndian, &data)
@@ -59,6 +60,7 @@ func (p *VMAVoicePC) String() string {
 	return s + util.Indent(p.Voice.String(), "\t")
 }
 
+// ToVM35 は、この構造体の内容をMA-3/MA-5用の音色データに変換します。
 func (p *VMAVoicePC) ToVM35() *VM35VoicePC {
 	return &VM35VoicePC{
 		Name:      p.Name,
