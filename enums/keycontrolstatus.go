@@ -5,11 +5,15 @@ import (
 	"fmt"
 )
 
+// KeyControlStatus は、キーのオン・オフ等のコントロール状態を表す列挙子型です。
 type KeyControlStatus int
 
 const (
+	// KeyControlStatus_NonSpecified は、キーオン・オフのいずれでもない状態です。
 	KeyControlStatus_NonSpecified = iota
+	// KeyControlStatus_Off は、キーオフ状態です。
 	KeyControlStatus_Off
+	// KeyControlStatus_On は、キーオン状態です。
 	KeyControlStatus_On
 )
 
