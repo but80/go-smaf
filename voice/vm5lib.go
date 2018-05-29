@@ -11,7 +11,7 @@ import (
 	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 )
 
-// VM5VoiceLib は、MA-5用の音色ライブラリです。
+// VM5VoiceLib は、MA-5用音色ライブラリです。
 type VM5VoiceLib struct {
 	Programs []*VM35VoicePC `json:"programs"`
 }

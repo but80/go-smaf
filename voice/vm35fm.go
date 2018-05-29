@@ -158,6 +158,7 @@ func (op *VM35FMOperator) String() string {
 	return fmt.Sprintf("Op #%d: MULTI=%s DT=%d\n", op.Num+1, op.MULTI, op.DT) + util.Indent(s, "\t")
 }
 
+// VM35FMVoice は、MA-3/MA-5用音色データで、1つのプログラムチェンジに含まれるFM音色部に相当します。
 type VM35FMVoice struct {
 	Version   VM35FMVoiceVersion `json:"-"`
 	DrumKey   enums.Note         `json:"drum_key"`
@@ -300,7 +301,9 @@ func (v *VM35FMVoice) Read(rdr io.Reader, rest *int) error {
 	return nil
 }
 
+// ReadUnusedRest は、実際には使用しないバイト列をストリームの残りから読み取り、ヘッダの位置を合わせます。
 func (v *VM35FMVoice) ReadUnusedRest(rdr io.Reader, rest *int) error {
+	// 2オペレータ音色の第3・第4オペレータ部の読み取り
 	n := v.ALG.OperatorCount()
 	for op := n; op < 4; op++ {
 		v.Operators[op] = &VM35FMOperator{Num: op}

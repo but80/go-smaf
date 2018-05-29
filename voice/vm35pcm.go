@@ -31,6 +31,7 @@ import (
 // +17 |               ?               |
 // +18 |               ?               |
 
+// VM35PCMVoice は、MA-3/MA-5用音色データで、1つのプログラムチェンジに含まれるPCM音色部に相当します。
 type VM35PCMVoice struct {
 	RawData [19]byte `json:"raw_data"`
 }
@@ -52,6 +53,7 @@ func (v *VM35PCMVoice) Read(rdr io.Reader, rest *int) error {
 	return nil
 }
 
+// ReadUnusedRest は、実際には使用しないバイト列をストリームの残りから読み取り、ヘッダの位置を合わせます。
 func (v *VM35PCMVoice) ReadUnusedRest(rdr io.Reader, rest *int) error {
 	return nil
 }

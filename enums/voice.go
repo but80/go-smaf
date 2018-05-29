@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// VoiceType は、音色の種類を表す列挙子です。
 type VoiceType int
 
 const (

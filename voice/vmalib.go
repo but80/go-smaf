@@ -11,6 +11,7 @@ import (
 	"gopkg.in/but80/go-smaf.v1/util"
 )
 
+// VMAVoiceLib は、MA-2用音色ライブラリです。
 type VMAVoiceLib struct {
 	Programs []*VMAVoicePC `json:"programs"`
 }

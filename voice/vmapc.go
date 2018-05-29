@@ -11,6 +11,7 @@ import (
 	"gopkg.in/but80/go-smaf.v1/util"
 )
 
+// VMAVoicePC は、MA-2用音色データで、1つのプログラムチェンジに相当します。
 type VMAVoicePC struct {
 	Name  string      `json:"name"`
 	Bank  int         `json:"bank"`

@@ -14,6 +14,7 @@ import (
 	"gopkg.in/but80/go-smaf.v1/util"
 )
 
+// VMAFMOperator は、MA-2用音色データに含まれるオペレータ部分です。
 type VMAFMOperator struct {
 	Num  int              `json:"-"`    // Operator number
 	MULT enums.Multiplier `json:"mult"` // Multiplier
@@ -133,6 +134,7 @@ func (op *VMAFMOperator) ToVM35(fb int) *VM35FMOperator {
 	}
 }
 
+// VMAFMVoice は、MA-2用音色データで、1つのプログラムチェンジに含まれる音色部に相当します。
 type VMAFMVoice struct {
 	LFO       int               `json:"lfo"`
 	FB        int               `json:"fb"`
@@ -190,7 +192,9 @@ func (v *VMAFMVoice) Read(rdr io.Reader, rest *int) error {
 	return nil
 }
 
+// ReadUnusedRest は、実際には使用しないバイト列をストリームの残りから読み取り、ヘッダの位置を合わせます。
 func (v *VMAFMVoice) ReadUnusedRest(rdr io.Reader, rest *int) error {
+	// 2オペレータ音色の第3・第4オペレータ部の読み取り
 	n := v.ALG.OperatorCount()
 	for op := n; op < 4; op++ {
 		v.Operators[op] = &VMAFMOperator{Num: op}

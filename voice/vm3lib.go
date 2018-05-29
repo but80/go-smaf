@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// VM3VoiceLib は、MA-3用音色ライブラリです。
 type VM3VoiceLib struct {
 	Programs []*VM35VoicePC `json:"programs"`
 }

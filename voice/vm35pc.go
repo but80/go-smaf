@@ -12,12 +12,14 @@ import (
 	"gopkg.in/but80/go-smaf.v1/util"
 )
 
+// VM35Voice は、MA-3/MA-5用音色データで、1つのプログラムチェンジに含まれる音色部を抽象化したインタフェースです。
 type VM35Voice interface {
 	fmt.Stringer
 	Read(rdr io.Reader, rest *int) error
 	ReadUnusedRest(rdr io.Reader, rest *int) error
 }
 
+// VM35VoicePC は、MA-3/MA-5用音色データで、1つのプログラムチェンジに相当します。
 type VM35VoicePC struct {
 	Version   VM35FMVoiceVersion `json:"is_vm5"`
 	Name      string             `json:"name"`
