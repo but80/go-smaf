@@ -13,4 +13,4 @@ gopkg.in 経由にてバージョン指定でインポートしてください�
 import "gopkg.in/but80/go-smaf.v1"
 ```
 
-使用例は [smaf825](https://github.com/but80/smaf825) のソースをご覧ください。
+使用例は [smaf825のv2ブランチ](https://github.com/but80/smaf825/tree/v2) のソースをご覧ください。
