@@ -8,11 +8,11 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/pkg/errors"
 	"gopkg.in/but80/go-smaf.v1/enums"
 	"gopkg.in/but80/go-smaf.v1/subtypes"
 	"gopkg.in/but80/go-smaf.v1/util"
 	"gopkg.in/but80/go-smaf.v1/voice"
-	"github.com/pkg/errors"
 )
 
 type FileChunk struct {

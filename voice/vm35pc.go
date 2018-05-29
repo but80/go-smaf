@@ -6,10 +6,10 @@ import (
 	"io"
 	"unsafe"
 
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/util"
 	"github.com/pkg/errors"
+	"gopkg.in/but80/go-smaf.v1/enums"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
+	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 type VM35Voice interface {

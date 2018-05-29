@@ -9,11 +9,11 @@ import (
 	"strings"
 	"unsafe"
 
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
+	"github.com/pkg/errors"
 	"gopkg.in/but80/go-smaf.v1/enums"
 	"gopkg.in/but80/go-smaf.v1/log"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 	"gopkg.in/but80/go-smaf.v1/util"
-	"github.com/pkg/errors"
 )
 
 type VM35FMVoiceVersion int

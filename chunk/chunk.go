@@ -7,10 +7,10 @@ import (
 	"io"
 	"unsafe"
 
+	"github.com/pkg/errors"
 	"gopkg.in/but80/go-smaf.v1/enums"
 	"gopkg.in/but80/go-smaf.v1/log"
 	"gopkg.in/but80/go-smaf.v1/subtypes"
-	"github.com/pkg/errors"
 )
 
 type Signature uint32

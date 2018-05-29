@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unsafe"
 
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 	"github.com/pkg/errors"
+	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 )
 
 type VM5VoiceLib struct {

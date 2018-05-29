@@ -7,11 +7,11 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/pkg/errors"
 	"gopkg.in/but80/go-smaf.v1/enums"
 	"gopkg.in/but80/go-smaf.v1/log"
 	"gopkg.in/but80/go-smaf.v1/subtypes"
 	"gopkg.in/but80/go-smaf.v1/util"
-	"github.com/pkg/errors"
 )
 
 type scoreTrackRawHeader struct {
