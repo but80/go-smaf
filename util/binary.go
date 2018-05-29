@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// ReadVariableInt は、可変長形式で記録されている整数値を読み取ります。
 func ReadVariableInt(allow3bytes bool, rdr io.Reader, rest *int) (int, error) {
 	result := int(0)
 	i := 0
@@ -30,6 +31,7 @@ func ReadVariableInt(allow3bytes bool, rdr io.Reader, rest *int) (int, error) {
 	return result, nil
 }
 
+// BoolToByte は、真偽値を特定のバイトに変換します。
 func BoolToByte(b bool, v byte) byte {
 	if b {
 		return v
@@ -37,6 +39,7 @@ func BoolToByte(b bool, v byte) byte {
 	return 0
 }
 
+// BytesToInts は、バイト列を整数の配列に変換します。
 func BytesToInts(b []byte) []int {
 	result := make([]int, len(b))
 	for i, v := range b {

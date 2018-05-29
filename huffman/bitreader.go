@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// BitReader は、バイト列からビット単位で値を読み取れる Reader ストリームです。
 type BitReader struct {
 	reader io.Reader
 	buf    uint8
@@ -18,6 +19,7 @@ func NewBitReader(rdr io.Reader) *BitReader {
 	return &BitReader{reader: rdr}
 }
 
+// ReadBit は、ストリームから1ビット読み取ります。
 func (r *BitReader) ReadBit() (bool, error) {
 	if r.rest == 0 {
 		err := binary.Read(r.reader, binary.LittleEndian, &r.buf)
@@ -40,6 +42,7 @@ func (r *BitReader) ReadBit() (bool, error) {
 	return result, nil
 }
 
+// ReadUint8 は、ストリームから8ビット読み取り、符号なし整数として返します。
 func (r *BitReader) ReadUint8() (uint8, error) {
 	var buf2 uint8
 	err := binary.Read(r.reader, binary.LittleEndian, &buf2)

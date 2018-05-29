@@ -16,6 +16,7 @@ const (
 	n = 256
 )
 
+// HuffmanDecoder は、ハフマン符号デコーダです。
 type HuffmanDecoder struct {
 	reader      *BitReader
 	avail       int
@@ -52,6 +53,7 @@ func (d *HuffmanDecoder) readtree() (int, error) {
 	}
 }
 
+// Read は、ハフマン符号を読み取ってデコードします。
 func (d *HuffmanDecoder) Read(p []byte) (int, error) {
 	d.avail = 256
 	root, err := d.readtree()
@@ -87,6 +89,7 @@ func NewHuffmanDecoder(rdr io.Reader) *HuffmanDecoder {
 	}
 }
 
+// HuffmanReader は、ハフマン符号をデコードする Reader ストリームです。
 type HuffmanReader struct {
 	reader  io.Reader
 	decoder *HuffmanDecoder
@@ -119,6 +122,7 @@ func (r *HuffmanReader) cache() error {
 	return nil
 }
 
+// Rest は、ストリームから読み取り可能な残りのバイト数を返します。
 func (r *HuffmanReader) Rest() (int, error) {
 	err := r.cache()
 	if err != nil {
@@ -127,6 +131,7 @@ func (r *HuffmanReader) Rest() (int, error) {
 	return len(r.buf), nil
 }
 
+// Read は、ハフマン符号のデコード結果を読み取ります。
 func (r *HuffmanReader) Read(p []byte) (int, error) {
 	err := r.cache()
 	if err != nil {

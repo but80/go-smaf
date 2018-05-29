@@ -7,6 +7,7 @@ import (
 	"gopkg.in/but80/go-smaf.v1/log"
 )
 
+// Note は、ノートナンバーを表す整数型です。
 type Note int
 
 var noteName = []string{
@@ -37,11 +38,13 @@ var noteName = []string{
 //	|A#3	|466.2	|4	|637|
 //	|B3		|493.9	|4	|674|
 
+// NoteFreq は、BLOCK と FNUM で表現される周波数です。
 type NoteFreq struct {
 	Block, Fnum int
 }
 
 const (
+	// Note_A3 は、A3のノートナンバーです。
 	Note_A3 = 9 + 12*3
 )
 
@@ -49,6 +52,7 @@ func (n Note) String() string {
 	return fmt.Sprintf("%s(%d)", n.Name(), int(n))
 }
 
+// Name は、このノートナンバーにあたる音階の名前を返します。
 func (n Note) Name() string {
 	i := int(n)
 	return fmt.Sprintf("%s%d", noteName[i%12], i/12-1)
@@ -56,6 +60,7 @@ func (n Note) Name() string {
 
 var fnumK = math.Pow(2.0, 19.0) / 48000.0 / 2.0
 
+// Freq は、このノートナンバーにあたる音階の周波数を返します。
 func (n Note) Freq(delta float64) NoteFreq {
 	f := 440 * math.Pow(2.0, (float64(n-Note_A3)+delta)/12.0)
 	block := int(n) / 12
