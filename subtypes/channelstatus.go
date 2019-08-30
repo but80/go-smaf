@@ -1,6 +1,6 @@
 package subtypes
 
-import "gopkg.in/but80/go-smaf.v1/enums"
+import "github.com/but80/go-smaf/v2/enums"
 
 type ChannelStatus struct {
 	// Key Control のリクエストを受けた時、該当 Channel に対し、Key Control を行うか否かの指定をする。

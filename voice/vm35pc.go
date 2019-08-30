@@ -6,10 +6,10 @@ import (
 	"io"
 	"unsafe"
 
+	"github.com/but80/go-smaf/v2/enums"
+	pb "github.com/but80/go-smaf/v2/pb/smaf"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 // VM35Voice は、MA-3/MA-5用音色データで、1つのプログラムチェンジに含まれる音色部を抽象化したインタフェースです。

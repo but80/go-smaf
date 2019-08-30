@@ -6,11 +6,11 @@ import (
 	"io"
 	"strings"
 
+	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/log"
+	"github.com/but80/go-smaf/v2/util"
+	"github.com/but80/go-smaf/v2/voice"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/log"
-	"gopkg.in/but80/go-smaf.v1/util"
-	"gopkg.in/but80/go-smaf.v1/voice"
 )
 
 type Exclusive struct {

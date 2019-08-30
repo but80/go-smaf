@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"gopkg.in/but80/go-smaf.v1/log"
+	"github.com/but80/go-smaf/v2/log"
 )
 
 // Note は、ノートナンバーを表す整数型です。

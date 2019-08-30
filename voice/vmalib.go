@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 // VMAVoiceLib は、MA-2用音色ライブラリです。

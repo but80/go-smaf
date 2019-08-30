@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unsafe"
 
+	pb "github.com/but80/go-smaf/v2/pb/smaf"
 	"github.com/pkg/errors"
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
 )
 
 // VM5VoiceLib は、MA-5用音色ライブラリです。

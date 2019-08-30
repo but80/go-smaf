@@ -9,9 +9,9 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 // VMAFMOperator は、MA-2用音色データに含まれるオペレータ部分です。

@@ -8,8 +8,8 @@ import (
 	"io"
 
 	"github.com/pkg/errors"
-	//"gopkg.in/but80/go-smaf.v1/log"
-	"gopkg.in/but80/go-smaf.v1/log"
+	//"github.com/but80/go-smaf/v2/log"
+	"github.com/but80/go-smaf/v2/log"
 )
 
 const (

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 type MMMGChunk struct {

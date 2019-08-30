@@ -5,8 +5,8 @@ import (
 	"io"
 	"strings"
 
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 type SeekPhraseInfoChunk struct {

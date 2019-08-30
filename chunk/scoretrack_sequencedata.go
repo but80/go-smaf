@@ -7,12 +7,12 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/event"
+	"github.com/but80/go-smaf/v2/huffman"
+	"github.com/but80/go-smaf/v2/log"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/event"
-	"gopkg.in/but80/go-smaf.v1/huffman"
-	"gopkg.in/but80/go-smaf.v1/log"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 type eventCandidate struct {

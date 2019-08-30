@@ -6,9 +6,9 @@ import (
 	"io"
 	"unsafe"
 
+	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	"gopkg.in/but80/go-smaf.v1/enums"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 // VMAVoicePC は、MA-2用音色データで、1つのプログラムチェンジに相当します。

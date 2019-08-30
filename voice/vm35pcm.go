@@ -5,9 +5,9 @@ import (
 	"io"
 	"unsafe"
 
+	pb "github.com/but80/go-smaf/v2/pb/smaf"
+	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
-	pb "gopkg.in/but80/go-smaf.v1/pb/smaf"
-	"gopkg.in/but80/go-smaf.v1/util"
 )
 
 //     | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
