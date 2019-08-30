@@ -8,9 +8,9 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/log"
 	"github.com/but80/go-smaf/v2/subtypes"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
@@ -103,7 +103,7 @@ func (c *ScoreTrackChunk) Read(rdr io.Reader) error {
 
 	c.ChannelStatus = map[enums.Channel]*subtypes.ChannelStatus{}
 	switch c.FormatType {
-	case enums.ScoreTrackFormatType_HandyPhoneStandard:
+	case enums.ScoreTrackFormatTypeHandyPhoneStandard:
 		var b uint16
 		err := binary.Read(rdr, binary.BigEndian, &b)
 		rest -= 2

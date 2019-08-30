@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/but80/go-smaf/v2/util"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/pkg/errors"
 )
 
@@ -58,7 +58,9 @@ func NewVMAVoiceLib(file string) (*VMAVoiceLib, error) {
 	defer fh.Close()
 
 	var hdr chunkHeader
-	err = binary.Read(fh, binary.BigEndian, &hdr)
+	if err := binary.Read(fh, binary.BigEndian, &hdr); err != nil {
+		return nil, errors.WithStack(err)
+	}
 	if hdr.Signature != 'F'<<24|'M'<<16|' '<<8|' ' {
 		return nil, errors.Errorf(`Header signature must be "FM  "`)
 	}
@@ -66,8 +68,7 @@ func NewVMAVoiceLib(file string) (*VMAVoiceLib, error) {
 	total := int(hdr.Size) + int(unsafe.Sizeof(hdr))
 	rest := int(hdr.Size)
 	lib := &VMAVoiceLib{}
-	err = lib.Read(fh, &rest)
-	if err != nil {
+	if err := lib.Read(fh, &rest); err != nil {
 		return nil, errors.Wrapf(err, "at 0x%X bytes", total-rest)
 	}
 

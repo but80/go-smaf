@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/log"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/but80/go-smaf/v2/voice"
 	"github.com/pkg/errors"
 )
@@ -26,7 +26,7 @@ type Exclusive struct {
 func NewExclusive(variableLength bool) *Exclusive {
 	return &Exclusive{
 		variableLength: variableLength,
-		Type:           enums.ExclusiveType_Unknown,
+		Type:           enums.ExclusiveTypeUnknown,
 		Data:           []uint8{},
 	}
 }
@@ -87,13 +87,13 @@ func (x *Exclusive) Read(rdr io.Reader, rest *int) error {
 	//}
 	//
 	if 10 <= len(x.Data) && x.Data[0] == 0x43 && x.Data[1] == 0x79 && x.Data[2] == 0x07 && x.Data[3] == 0x7F && x.Data[4] == 0x01 {
-		x.Type = enums.ExclusiveType_VM35Voice
+		x.Type = enums.ExclusiveTypeVM35Voice
 		x.VoiceType = enums.VoiceType(x.Data[9])
-		if x.VoiceType == enums.VoiceType_FM {
-			v, err := voice.NewVM35FMVoice(x.Data[10:], voice.VM35FMVoiceVersion_VM5)
+		if x.VoiceType == enums.VoiceTypeFM {
+			v, err := voice.NewVM35FMVoice(x.Data[10:], voice.VM35FMVoiceVersionVM5)
 			if err == nil {
 				x.VM35VoicePC = &voice.VM35VoicePC{
-					Version:  voice.VM35FMVoiceVersion_VM5,
+					Version:  voice.VM35FMVoiceVersionVM5,
 					BankMSB:  int(x.Data[5]),
 					BankLSB:  int(x.Data[6]),
 					PC:       int(x.Data[7]),
@@ -107,13 +107,13 @@ func (x *Exclusive) Read(rdr io.Reader, rest *int) error {
 			log.Warnf("Unsupported voice type: %s", x.VoiceType.String())
 		}
 	} else if 10 <= len(x.Data) && x.Data[0] == 0x43 && x.Data[1] == 0x79 && x.Data[2] == 0x06 && x.Data[3] == 0x7F && x.Data[4] == 0x01 {
-		x.Type = enums.ExclusiveType_VM35Voice
+		x.Type = enums.ExclusiveTypeVM35Voice
 		x.VoiceType = enums.VoiceType(x.Data[9])
-		if x.VoiceType == enums.VoiceType_FM {
-			v, err := voice.NewVM35FMVoice(x.Data[10:], voice.VM35FMVoiceVersion_VM3Exclusive)
+		if x.VoiceType == enums.VoiceTypeFM {
+			v, err := voice.NewVM35FMVoice(x.Data[10:], voice.VM35FMVoiceVersionVM3Exclusive)
 			if err == nil {
 				x.VM35VoicePC = &voice.VM35VoicePC{
-					Version:  voice.VM35FMVoiceVersion_VM3Exclusive,
+					Version:  voice.VM35FMVoiceVersionVM3Exclusive,
 					BankMSB:  int(x.Data[5]),
 					BankLSB:  int(x.Data[6]),
 					PC:       int(x.Data[7]),
@@ -127,12 +127,12 @@ func (x *Exclusive) Read(rdr io.Reader, rest *int) error {
 			log.Warnf("Unsupported voice type: %s", x.VoiceType.String())
 		}
 	} else if 3 <= len(x.Data) && x.Data[0] == 0x43 && x.Data[1] == 0x05 && x.Data[2] == 0x01 {
-		x.Type = enums.ExclusiveType_VM35Voice
-		x.VoiceType = enums.VoiceType_FM
-		v, err := voice.NewVM35FMVoice(x.Data[5:], voice.VM35FMVoiceVersion_VM5)
+		x.Type = enums.ExclusiveTypeVM35Voice
+		x.VoiceType = enums.VoiceTypeFM
+		v, err := voice.NewVM35FMVoice(x.Data[5:], voice.VM35FMVoiceVersionVM5)
 		if err == nil {
 			x.VM35VoicePC = &voice.VM35VoicePC{
-				Version:  voice.VM35FMVoiceVersion_VM5,
+				Version:  voice.VM35FMVoiceVersionVM5,
 				BankMSB:  0,
 				BankLSB:  int(x.Data[3]),
 				PC:       int(x.Data[4]),
@@ -143,8 +143,8 @@ func (x *Exclusive) Read(rdr io.Reader, rest *int) error {
 			log.Warnf("VM3/VM5 voice exclusive error: %s", err.Error())
 		}
 	} else if 6 <= len(x.Data) && x.Data[0] == 0x43 && x.Data[1] == 0x03 {
-		x.Type = enums.ExclusiveType_VMAVoice
-		x.VoiceType = enums.VoiceType_FM
+		x.Type = enums.ExclusiveTypeVMAVoice
+		x.VoiceType = enums.VoiceTypeFM
 		v, err := voice.NewVMAFMVoice(x.Data[5:])
 		if err == nil {
 			x.VMAVoicePC = &voice.VMAVoicePC{

@@ -7,7 +7,7 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
-	"github.com/but80/go-smaf/v2/util"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/pkg/errors"
 )
 
@@ -71,7 +71,7 @@ func (p *VMAVoicePC) ToVM35() *VM35VoicePC {
 		PC:        p.PC,
 		DrumNote:  0,
 		Enigma1:   0,
-		VoiceType: enums.VoiceType_FM,
+		VoiceType: enums.VoiceTypeFM,
 		Voice:     p.Voice.ToVM35(),
 	}
 }

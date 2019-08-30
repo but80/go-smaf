@@ -44,8 +44,8 @@ type NoteFreq struct {
 }
 
 const (
-	// Note_A3 は、A3のノートナンバーです。
-	Note_A3 = 9 + 12*3
+	// NoteA3 は、A3のノートナンバーです。
+	NoteA3 = 9 + 12*3
 )
 
 func (n Note) String() string {
@@ -62,7 +62,7 @@ var fnumK = math.Pow(2.0, 19.0) / 48000.0 / 2.0
 
 // Freq は、このノートナンバーにあたる音階の周波数を返します。
 func (n Note) Freq(delta float64) NoteFreq {
-	f := 440 * math.Pow(2.0, (float64(n-Note_A3)+delta)/12.0)
+	f := 440 * math.Pow(2.0, (float64(n-NoteA3)+delta)/12.0)
 	block := int(n) / 12
 	if block < 0 {
 		block = 0

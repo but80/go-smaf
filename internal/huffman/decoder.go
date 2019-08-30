@@ -7,23 +7,22 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/pkg/errors"
-	//"github.com/but80/go-smaf/v2/log"
 	"github.com/but80/go-smaf/v2/log"
+	"github.com/pkg/errors"
 )
 
 const (
 	n = 256
 )
 
-// HuffmanDecoder は、ハフマン符号デコーダです。
-type HuffmanDecoder struct {
+// decoder は、ハフマン符号デコーダです。
+type decoder struct {
 	reader      *BitReader
 	avail       int
 	left, right [2*n - 1]int
 }
 
-func (d *HuffmanDecoder) readtree() (int, error) {
+func (d *decoder) readtree() (int, error) {
 	bit, err := d.reader.ReadBit()
 	//log.Debugf("%v", bit)
 	if err != nil {
@@ -44,17 +43,17 @@ func (d *HuffmanDecoder) readtree() (int, error) {
 			return -1, errors.WithStack(err)
 		}
 		return i, nil // return node
-	} else {
-		value, err := d.reader.ReadUint8()
-		if err != nil {
-			return -1, errors.WithStack(err)
-		}
-		return int(value), nil // return leaf
 	}
+
+	value, err := d.reader.ReadUint8()
+	if err != nil {
+		return -1, errors.WithStack(err)
+	}
+	return int(value), nil // return leaf
 }
 
 // Read は、ハフマン符号を読み取ってデコードします。
-func (d *HuffmanDecoder) Read(p []byte) (int, error) {
+func (d *decoder) Read(p []byte) (int, error) {
 	d.avail = 256
 	root, err := d.readtree()
 	if err != nil {
@@ -82,29 +81,29 @@ func (d *HuffmanDecoder) Read(p []byte) (int, error) {
 	return size, nil
 }
 
-// NewHuffmanDecoder は、新しい HuffmanDecoder を作成します。
-func NewHuffmanDecoder(rdr io.Reader) *HuffmanDecoder {
-	return &HuffmanDecoder{
+// newDecoder は、新しい decoder を作成します。
+func newDecoder(rdr io.Reader) *decoder {
+	return &decoder{
 		reader: NewBitReader(rdr),
 	}
 }
 
-// HuffmanReader は、ハフマン符号をデコードする Reader ストリームです。
-type HuffmanReader struct {
+// Reader は、ハフマン符号をデコードする Reader ストリームです。
+type Reader struct {
 	reader  io.Reader
-	decoder *HuffmanDecoder
+	decoder *decoder
 	buf     []byte
 }
 
-// NewHuffmanReader は、新しい HuffmanReader を作成します。
-func NewHuffmanReader(rdr io.Reader) *HuffmanReader {
-	return &HuffmanReader{
+// NewReader は、新しい Reader を作成します。
+func NewReader(rdr io.Reader) *Reader {
+	return &Reader{
 		reader:  rdr,
-		decoder: NewHuffmanDecoder(rdr),
+		decoder: newDecoder(rdr),
 	}
 }
 
-func (r *HuffmanReader) cache() error {
+func (r *Reader) cache() error {
 	if r.buf != nil {
 		return nil
 	}
@@ -123,7 +122,7 @@ func (r *HuffmanReader) cache() error {
 }
 
 // Rest は、ストリームから読み取り可能な残りのバイト数を返します。
-func (r *HuffmanReader) Rest() (int, error) {
+func (r *Reader) Rest() (int, error) {
 	err := r.cache()
 	if err != nil {
 		return 0, errors.WithStack(err)
@@ -132,7 +131,7 @@ func (r *HuffmanReader) Rest() (int, error) {
 }
 
 // Read は、ハフマン符号のデコード結果を読み取ります。
-func (r *HuffmanReader) Read(p []byte) (int, error) {
+func (r *Reader) Read(p []byte) (int, error) {
 	err := r.cache()
 	if err != nil {
 		return 0, errors.WithStack(err)

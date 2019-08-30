@@ -3,9 +3,13 @@
 
 package smaf
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -21,30 +25,30 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 type VM35FMVoiceVersion int32
 
 const (
-	VM35FMVoiceVersion_VM35FMVoiceVersion_MIN VM35FMVoiceVersion = 0
-	VM35FMVoiceVersion_VM3LIB                 VM35FMVoiceVersion = 0
-	VM35FMVoiceVersion_VM3EXCLUSIVE           VM35FMVoiceVersion = 1
-	VM35FMVoiceVersion_VM5                    VM35FMVoiceVersion = 2
-	VM35FMVoiceVersion_VM35FMVoiceVersion_MAX VM35FMVoiceVersion = 2
+	VM35FMVoiceVersionVM35FMVoiceVersionMIN VM35FMVoiceVersion = 0
+	VM35FMVoiceVersionVM3LIB                VM35FMVoiceVersion = 0
+	VM35FMVoiceVersionVM3EXCLUSIVE          VM35FMVoiceVersion = 1
+	VM35FMVoiceVersionVM5                   VM35FMVoiceVersion = 2
+	VM35FMVoiceVersionVM35FMVoiceVersionMAX VM35FMVoiceVersion = 2
 )
 
-var VM35FMVoiceVersion_name = map[int32]string{
-	0: "VM35FMVoiceVersion_MIN",
+var VM35FMVoiceVersionname = map[int32]string{
+	0: "VM35FMVoiceVersionMIN",
 	// Duplicate value: 0: "VM3LIB",
 	1: "VM3EXCLUSIVE",
 	2: "VM5",
-	// Duplicate value: 2: "VM35FMVoiceVersion_MAX",
+	// Duplicate value: 2: "VM35FMVoiceVersionMAX",
 }
-var VM35FMVoiceVersion_value = map[string]int32{
-	"VM35FMVoiceVersion_MIN": 0,
-	"VM3LIB":                 0,
-	"VM3EXCLUSIVE":           1,
-	"VM5":                    2,
-	"VM35FMVoiceVersion_MAX": 2,
+var VM35FMVoiceVersionvalue = map[string]int32{
+	"VM35FMVoiceVersionMIN": 0,
+	"VM3LIB":                0,
+	"VM3EXCLUSIVE":          1,
+	"VM5":                   2,
+	"VM35FMVoiceVersionMAX": 2,
 }
 
 func (x VM35FMVoiceVersion) String() string {
-	return proto.EnumName(VM35FMVoiceVersion_name, int32(x))
+	return proto.EnumName(VM35FMVoiceVersionname, int32(x))
 }
 func (VM35FMVoiceVersion) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_smaf_4f8a53039970ce01, []int{0}
@@ -53,30 +57,30 @@ func (VM35FMVoiceVersion) EnumDescriptor() ([]byte, []int) {
 type VoiceType int32
 
 const (
-	VoiceType_VoiceType_MIN VoiceType = 0
-	VoiceType_FM            VoiceType = 0
-	VoiceType_PCM           VoiceType = 1
-	VoiceType_AL            VoiceType = 2
-	VoiceType_VoiceType_MAX VoiceType = 2
+	VoiceTypeVoiceTypeMIN VoiceType = 0
+	VoiceTypeFM           VoiceType = 0
+	VoiceTypePCM          VoiceType = 1
+	VoiceTypeAL           VoiceType = 2
+	VoiceTypeVoiceTypeMAX VoiceType = 2
 )
 
-var VoiceType_name = map[int32]string{
-	0: "VoiceType_MIN",
+var VoiceTypename = map[int32]string{
+	0: "VoiceTypeMIN",
 	// Duplicate value: 0: "FM",
 	1: "PCM",
 	2: "AL",
-	// Duplicate value: 2: "VoiceType_MAX",
+	// Duplicate value: 2: "VoiceTypeMAX",
 }
-var VoiceType_value = map[string]int32{
-	"VoiceType_MIN": 0,
-	"FM":            0,
-	"PCM":           1,
-	"AL":            2,
-	"VoiceType_MAX": 2,
+var VoiceTypevalue = map[string]int32{
+	"VoiceTypeMIN": 0,
+	"FM":           0,
+	"PCM":          1,
+	"AL":           2,
+	"VoiceTypeMAX": 2,
 }
 
 func (x VoiceType) String() string {
-	return proto.EnumName(VoiceType_name, int32(x))
+	return proto.EnumName(VoiceTypename, int32(x))
 }
 func (VoiceType) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_smaf_4f8a53039970ce01, []int{1}
@@ -163,7 +167,7 @@ func (m *VM35VoicePC) GetVersion() VM35FMVoiceVersion {
 	if m != nil {
 		return m.Version
 	}
-	return VM35FMVoiceVersion_VM35FMVoiceVersion_MIN
+	return VM35FMVoiceVersionVM35FMVoiceVersionMIN
 }
 
 func (m *VM35VoicePC) GetName() string {
@@ -205,7 +209,7 @@ func (m *VM35VoicePC) GetVoiceType() VoiceType {
 	if m != nil {
 		return m.VoiceType
 	}
-	return VoiceType_VoiceType_MIN
+	return VoiceTypeVoiceTypeMIN
 }
 
 func (m *VM35VoicePC) GetFmVoice() *VM35FMVoice {
@@ -526,8 +530,8 @@ func init() {
 	proto.RegisterType((*VM35FMVoice)(nil), "smaf.VM35FMVoice")
 	proto.RegisterType((*VM35FMOperator)(nil), "smaf.VM35FMOperator")
 	proto.RegisterType((*VM35PCMVoice)(nil), "smaf.VM35PCMVoice")
-	proto.RegisterEnum("smaf.VM35FMVoiceVersion", VM35FMVoiceVersion_name, VM35FMVoiceVersion_value)
-	proto.RegisterEnum("smaf.VoiceType", VoiceType_name, VoiceType_value)
+	proto.RegisterEnum("smaf.VM35FMVoiceVersion", VM35FMVoiceVersionname, VM35FMVoiceVersionvalue)
+	proto.RegisterEnum("smaf.VoiceType", VoiceTypename, VoiceTypevalue)
 }
 
 func init() { proto.RegisterFile("smaf.proto", fileDescriptor_smaf_4f8a53039970ce01) }

@@ -8,17 +8,17 @@ import (
 type ExclusiveType int
 
 const (
-	ExclusiveType_Unknown ExclusiveType = iota
-	ExclusiveType_VMAVoice
-	ExclusiveType_VM35Voice
+	ExclusiveTypeUnknown ExclusiveType = iota
+	ExclusiveTypeVMAVoice
+	ExclusiveTypeVM35Voice
 )
 
 func (t ExclusiveType) String() string {
 	var s string
 	switch t {
-	case ExclusiveType_VMAVoice:
+	case ExclusiveTypeVMAVoice:
 		s = "VMAVoice"
-	case ExclusiveType_VM35Voice:
+	case ExclusiveTypeVM35Voice:
 		s = "VM35Voice"
 	default:
 		s = fmt.Sprintf("undefined (0x%02X)", int(t))

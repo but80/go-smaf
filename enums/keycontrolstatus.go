@@ -9,22 +9,22 @@ import (
 type KeyControlStatus int
 
 const (
-	// KeyControlStatus_NonSpecified は、キーオン・オフのいずれでもない状態です。
-	KeyControlStatus_NonSpecified = iota
-	// KeyControlStatus_Off は、キーオフ状態です。
-	KeyControlStatus_Off
-	// KeyControlStatus_On は、キーオン状態です。
-	KeyControlStatus_On
+	// KeyControlStatusNonSpecified は、キーオン・オフのいずれでもない状態です。
+	KeyControlStatusNonSpecified = iota
+	// KeyControlStatusOff は、キーオフ状態です。
+	KeyControlStatusOff
+	// KeyControlStatusOn は、キーオン状態です。
+	KeyControlStatusOn
 )
 
 func (t KeyControlStatus) String() string {
 	var s string
 	switch t {
-	case KeyControlStatus_NonSpecified:
+	case KeyControlStatusNonSpecified:
 		s = "NonSpecified"
-	case KeyControlStatus_Off:
+	case KeyControlStatusOff:
 		s = "Off"
-	case KeyControlStatus_On:
+	case KeyControlStatusOn:
 		s = "On"
 	default:
 		s = fmt.Sprintf("undefined (0x%02X)", int(t))

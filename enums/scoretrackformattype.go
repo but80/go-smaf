@@ -8,16 +8,16 @@ import (
 type ScoreTrackFormatType int
 
 const (
-	ScoreTrackFormatType_HandyPhoneStandard ScoreTrackFormatType = iota
-	ScoreTrackFormatType_MobileStandardCompressed
-	ScoreTrackFormatType_MobileStandardNonCompressed
-	ScoreTrackFormatType_SEQU    = -1
-	ScoreTrackFormatType_Default = ScoreTrackFormatType_HandyPhoneStandard
+	ScoreTrackFormatTypeHandyPhoneStandard ScoreTrackFormatType = iota
+	ScoreTrackFormatTypeMobileStandardCompressed
+	ScoreTrackFormatTypeMobileStandardNonCompressed
+	ScoreTrackFormatTypeSEQU    = -1
+	ScoreTrackFormatTypeDefault = ScoreTrackFormatTypeHandyPhoneStandard
 )
 
 func (t ScoreTrackFormatType) IsSupported() bool {
 	switch t {
-	case ScoreTrackFormatType_HandyPhoneStandard, ScoreTrackFormatType_MobileStandardCompressed, ScoreTrackFormatType_MobileStandardNonCompressed:
+	case ScoreTrackFormatTypeHandyPhoneStandard, ScoreTrackFormatTypeMobileStandardCompressed, ScoreTrackFormatTypeMobileStandardNonCompressed:
 		return true
 	}
 	return false
@@ -26,11 +26,11 @@ func (t ScoreTrackFormatType) IsSupported() bool {
 func (t ScoreTrackFormatType) String() string {
 	var s string
 	switch t {
-	case ScoreTrackFormatType_HandyPhoneStandard:
+	case ScoreTrackFormatTypeHandyPhoneStandard:
 		s = "HandyPhoneStandard"
-	case ScoreTrackFormatType_MobileStandardCompressed:
+	case ScoreTrackFormatTypeMobileStandardCompressed:
 		s = "MobileStandardCompressed"
-	case ScoreTrackFormatType_MobileStandardNonCompressed:
+	case ScoreTrackFormatTypeMobileStandardNonCompressed:
 		s = "MobileStandardNonCompressed"
 	default:
 		s = fmt.Sprintf("undefined (0x%02X)", int(t))

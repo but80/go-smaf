@@ -31,7 +31,7 @@ func (lib *VM5VoiceLib) ToPB() *pb.VM5VoiceLib {
 func (lib *VM5VoiceLib) Read(rdr io.Reader, rest *int) error {
 	lib.Programs = []*VM35VoicePC{}
 	for pc := 0; pc < 128 && 0 < *rest; pc++ {
-		voice := &VM35VoicePC{Version: VM35FMVoiceVersion_VM5}
+		voice := &VM35VoicePC{Version: VM35FMVoiceVersionVM5}
 		err := voice.Read(rdr, rest)
 		if err != nil {
 			return errors.WithStack(err)
@@ -58,7 +58,9 @@ func NewVM5VoiceLib(file string) (*VM5VoiceLib, error) {
 	defer fh.Close()
 
 	var hdr chunkHeader
-	err = binary.Read(fh, binary.BigEndian, &hdr)
+	if err := binary.Read(fh, binary.BigEndian, &hdr); err != nil {
+		return nil, errors.WithStack(err)
+	}
 	if hdr.Signature != 'V'<<24|'O'<<16|'M'<<8|'5' {
 		return nil, errors.Errorf(`Header signature must be "VOM5"`)
 	}
@@ -66,8 +68,7 @@ func NewVM5VoiceLib(file string) (*VM5VoiceLib, error) {
 	total := int(hdr.Size) + int(unsafe.Sizeof(hdr))
 	rest := int(hdr.Size)
 	lib := &VM5VoiceLib{}
-	err = lib.Read(fh, &rest)
-	if err != nil {
+	if err := lib.Read(fh, &rest); err != nil {
 		return nil, errors.Wrapf(err, "at 0x%X bytes", total-rest)
 	}
 

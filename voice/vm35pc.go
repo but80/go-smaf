@@ -7,8 +7,8 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	pb "github.com/but80/go-smaf/v2/pb/smaf"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
@@ -78,7 +78,7 @@ func (p *VM35VoicePC) ToPB() *pb.VM35VoicePC {
 // Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (p *VM35VoicePC) Read(rdr io.Reader, rest *int) error {
 	switch p.Version {
-	case VM35FMVoiceVersion_VM5:
+	case VM35FMVoiceVersionVM5:
 		var data vm5VoicePCHeaderRawData
 		err := binary.Read(rdr, binary.BigEndian, &data)
 		if err != nil {
@@ -93,7 +93,7 @@ func (p *VM35VoicePC) Read(rdr io.Reader, rest *int) error {
 		p.DrumNote = enums.Note(data.DrumNote)
 		p.Enigma1 = int(data.Enigma1)
 		p.VoiceType = enums.VoiceType(data.VoiceType)
-	case VM35FMVoiceVersion_VM3Lib:
+	case VM35FMVoiceVersionVM3Lib:
 		var data vm3VoicePCHeaderRawData
 		err := binary.Read(rdr, binary.BigEndian, &data)
 		if err != nil {
@@ -110,14 +110,14 @@ func (p *VM35VoicePC) Read(rdr io.Reader, rest *int) error {
 		p.VoiceType = enums.VoiceType(data.VoiceType)
 	}
 	switch p.VoiceType {
-	case enums.VoiceType_FM:
+	case enums.VoiceTypeFM:
 		p.Voice = &VM35FMVoice{}
 		p.Voice.Read(rdr, rest)
 		p.Voice.ReadUnusedRest(rdr, rest)
-	case enums.VoiceType_PCM:
+	case enums.VoiceTypePCM:
 		p.Voice = &VM35PCMVoice{}
 		p.Voice.Read(rdr, rest)
-	//case enums.VoiceType_AL:
+	//case enums.VoiceTypeAL:
 	default:
 		return fmt.Errorf("contains unsupported type of voice: %s", p.VoiceType.String())
 	}

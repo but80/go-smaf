@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/subtypes"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
@@ -51,7 +51,7 @@ func (c *MMMGVoiceChunk) Read(rdr io.Reader) error {
 		if err != nil {
 			return errors.WithStack(err)
 		}
-		sub, err := hdr.CreateChunk(rdr, enums.ScoreTrackFormatType_Default)
+		sub, err := hdr.CreateChunk(rdr, enums.ScoreTrackFormatTypeDefault)
 		if err != nil {
 			return errors.WithStack(err)
 		}

@@ -9,9 +9,9 @@ import (
 
 	"github.com/but80/go-smaf/v2/enums"
 	"github.com/but80/go-smaf/v2/event"
-	"github.com/but80/go-smaf/v2/huffman"
+	"github.com/but80/go-smaf/v2/internal/huffman"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/log"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
@@ -29,9 +29,8 @@ func (p eventCandidates) Len() int {
 func (p eventCandidates) Less(i, j int) bool {
 	if p[i].Duration == p[j].Duration {
 		return p[i].index < p[j].index
-	} else {
-		return p[i].Duration < p[j].Duration
 	}
+	return p[i].Duration < p[j].Duration
 }
 
 func (p eventCandidates) Swap(i, j int) {
@@ -123,8 +122,8 @@ func (c *ScoreTrackSequenceDataChunk) String() string {
 func (c *ScoreTrackSequenceDataChunk) Read(rdr io.Reader) error {
 	var err error
 	rest := int(c.Size)
-	if c.FormatType == enums.ScoreTrackFormatType_MobileStandardCompressed {
-		hrdr := huffman.NewHuffmanReader(rdr)
+	if c.FormatType == enums.ScoreTrackFormatTypeMobileStandardCompressed {
+		hrdr := huffman.NewReader(rdr)
 		rdr = hrdr
 		rest, err = hrdr.Rest()
 		if err != nil {
@@ -147,17 +146,17 @@ func (c *ScoreTrackSequenceDataChunk) Read(rdr io.Reader) error {
 		}
 		var pair event.DurationEventPair
 		switch c.FormatType {
-		case enums.ScoreTrackFormatType_HandyPhoneStandard:
+		case enums.ScoreTrackFormatTypeHandyPhoneStandard:
 			pair.Duration, err = util.ReadVariableInt(false, rdr, &rest)
 			if err == nil {
 				pair.Event, err = event.CreateEventHPS(rdr, &rest, ctx)
 			}
-		case enums.ScoreTrackFormatType_SEQU:
+		case enums.ScoreTrackFormatTypeSEQU:
 			pair.Duration, err = util.ReadVariableInt(false, rdr, &rest)
 			if err == nil {
 				pair.Event, err = event.CreateEventSEQU(rdr, &rest, ctx)
 			}
-		case enums.ScoreTrackFormatType_MobileStandardNonCompressed, enums.ScoreTrackFormatType_MobileStandardCompressed:
+		case enums.ScoreTrackFormatTypeMobileStandardNonCompressed, enums.ScoreTrackFormatTypeMobileStandardCompressed:
 			pair.Duration, err = util.ReadVariableInt(true, rdr, &rest)
 			if err == nil {
 				pair.Event, err = event.CreateEvent(rdr, &rest, ctx)
@@ -184,9 +183,9 @@ func (c *ScoreTrackSequenceDataChunk) AggregateUsage(channelsToSplit []enums.Cha
 		switch evt := e.Event.(type) {
 		case *event.ControlChangeEvent:
 			switch evt.CC {
-			case enums.CC_BankSelectMSB:
+			case enums.CCBankSelectMSB:
 				pc[ch] = pc[ch]&0x00FFFFFF | uint32(evt.Value)<<24
-			case enums.CC_BankSelectLSB:
+			case enums.CCBankSelectLSB:
 				pc[ch] = pc[ch]&0xFF00FFFF | uint32(evt.Value)<<16
 			}
 		case *event.ProgramChangeEvent:

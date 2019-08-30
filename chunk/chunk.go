@@ -91,7 +91,7 @@ func (hdr *ChunkHeader) CreateChunk(rdr io.Reader, formatType enums.ScoreTrackFo
 		log.Debugf("Creating ScoreTrackSequenceDataChunk")
 		chunk = &ScoreTrackSequenceDataChunk{
 			ChunkHeader: hdr,
-			FormatType:  enums.ScoreTrackFormatType_SEQU,
+			FormatType:  enums.ScoreTrackFormatTypeSEQU,
 		}
 	case 'V'<<24 | 'O'<<16 | 'I'<<8 | 'C': // VOIC
 		log.Debugf("Creating MMMGVoiceChunk")

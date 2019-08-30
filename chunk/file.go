@@ -9,8 +9,8 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/subtypes"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/but80/go-smaf/v2/voice"
 	"github.com/pkg/errors"
 )
@@ -95,7 +95,7 @@ func (c *FileChunk) Read(rdr io.Reader) error {
 		if err != nil {
 			return errors.Wrapf(err, "at 0x%X -> 0x%X", from, to)
 		}
-		sub, err := hdr.CreateChunk(rdr, enums.ScoreTrackFormatType_Default)
+		sub, err := hdr.CreateChunk(rdr, enums.ScoreTrackFormatTypeDefault)
 		if err != nil {
 			return errors.Wrapf(err, "at 0x%X -> 0x%X", from, to)
 		}

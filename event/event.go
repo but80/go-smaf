@@ -6,23 +6,23 @@ import (
 	"io"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/subtypes"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
-type sequenceBuilderContext struct {
+type SequenceBuilderContext struct {
 	lastVelocity [16]int
 }
 
-// NewSequenceBuilderContext は、新しい sequenceBuilderContext を作成します。
-func NewSequenceBuilderContext() *sequenceBuilderContext {
-	ctx := &sequenceBuilderContext{lastVelocity: [16]int{}}
+// NewSequenceBuilderContext は、新しい SequenceBuilderContext を作成します。
+func NewSequenceBuilderContext() *SequenceBuilderContext {
+	ctx := &SequenceBuilderContext{lastVelocity: [16]int{}}
 	ctx.reset()
 	return ctx
 }
 
-func (ctx *sequenceBuilderContext) reset() {
+func (ctx *SequenceBuilderContext) reset() {
 	for i := 0; i < 16; i++ {
 		ctx.lastVelocity[i] = 64
 	}
@@ -170,7 +170,7 @@ var shortExpTable = []int{
 	0x4F, 0x57, 0x5F, 0x67, 0x6F, 0x77, 0x7F, 0x7F,
 }
 
-func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Event, error) {
+func CreateEventSEQU(rdr io.Reader, rest *int, ctx *SequenceBuilderContext) (Event, error) {
 	var sig uint8
 	err := binary.Read(rdr, binary.BigEndian, &sig)
 	if err != nil {
@@ -196,11 +196,11 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 			*rest--
 			return &FineTuneEvent{Channel: ch, Value: int(fine)}, nil
 		} else if 0x01 <= msg && msg <= 0x0e {
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Expression, Value: shortExpTable[msg]}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCExpression, Value: shortExpTable[msg]}, nil
 		} else if 0x11 <= msg && msg <= 0x1e {
 			return &PitchBendEvent{Channel: ch, Value: int(msg-0x10) * 16384 / 16}, nil
 		} else if 0x21 <= msg && msg <= 0x2e {
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Modulation, Value: shortModTable[msg-0x20]}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCModulation, Value: shortModTable[msg-0x20]}, nil
 		} else if msg == 0x30 {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -216,7 +216,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_BankSelectLSB, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCBankSelectLSB, Value: int(value)}, nil
 		} else if msg == 0x32 {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -236,7 +236,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Modulation, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCModulation, Value: int(value)}, nil
 		} else if msg == 0x34 {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -252,7 +252,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Expression, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCExpression, Value: int(value)}, nil
 		} else if msg == 0x37 {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -260,7 +260,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_MainVolume, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCMainVolume, Value: int(value)}, nil
 		} else if msg == 0x3a {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -268,7 +268,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Panpot, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCPanpot, Value: int(value)}, nil
 		} else if msg == 0x3b {
 			var value uint8
 			err := binary.Read(rdr, binary.BigEndian, &value)
@@ -276,7 +276,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 				return nil, errors.WithStack(err)
 			}
 			*rest--
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Expression, Value: int(value)}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCExpression, Value: int(value)}, nil
 		} else {
 			return nil, errors.Errorf("Invalid event: 0x%02X", sig)
 		}
@@ -311,7 +311,7 @@ func CreateEventSEQU(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Eve
 	}
 }
 
-func CreateEventHPS(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Event, error) {
+func CreateEventHPS(rdr io.Reader, rest *int, ctx *SequenceBuilderContext) (Event, error) {
 	var sig uint8
 	err := binary.Read(rdr, binary.BigEndian, &sig)
 	if err != nil {
@@ -378,22 +378,22 @@ func CreateEventHPS(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Even
 		case 0: // program change
 			return &ProgramChangeEvent{Channel: ch, PC: value}, nil
 		case 1: // bank select
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_BankSelectLSB, Value: value}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCBankSelectLSB, Value: value}, nil
 		case 2: // octave shift
 			if 0x80 <= value {
 				value = -(value - 0x80)
 			}
 			return &OctaveShiftEvent{Channel: ch, Value: value}, nil
 		case 3: // modulation
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Modulation, Value: value}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCModulation, Value: value}, nil
 		case 4: // pitch bend
 			return &PitchBendEvent{Channel: ch, Value: (value - 64) * (8192 / 64)}, nil
 		case 7: // volume Gain[dB] = 20*log(Data^2/127^2)
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_MainVolume, Value: value}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCMainVolume, Value: value}, nil
 		case 10: // pan
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Panpot, Value: value}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCPanpot, Value: value}, nil
 		case 11: // expression
-			return &ControlChangeEvent{Channel: ch, CC: enums.CC_Expression, Value: value}, nil
+			return &ControlChangeEvent{Channel: ch, CC: enums.CCExpression, Value: value}, nil
 		default:
 			return nil, errors.Errorf("Invalid event: 0x%02X", sig)
 		}
@@ -401,7 +401,7 @@ func CreateEventHPS(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Even
 	case 2:
 		// modulation
 		value := int(sig & 15)
-		return &ControlChangeEvent{Channel: ch, CC: enums.CC_Modulation, Value: shortModTable[value]}, nil
+		return &ControlChangeEvent{Channel: ch, CC: enums.CCModulation, Value: shortModTable[value]}, nil
 
 	case 1:
 		// pitch bend
@@ -411,13 +411,13 @@ func CreateEventHPS(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Even
 	case 0:
 		// expression
 		value := int(sig & 15)
-		return &ControlChangeEvent{Channel: ch, CC: enums.CC_Expression, Value: shortExpTable[value]}, nil
+		return &ControlChangeEvent{Channel: ch, CC: enums.CCExpression, Value: shortExpTable[value]}, nil
 	}
 
 	return nil, errors.Errorf("Invalid event: 0x00%02X", sig)
 }
 
-func CreateEvent(rdr io.Reader, rest *int, ctx *sequenceBuilderContext) (Event, error) {
+func CreateEvent(rdr io.Reader, rest *int, ctx *SequenceBuilderContext) (Event, error) {
 	var sig uint8
 	err := binary.Read(rdr, binary.BigEndian, &sig)
 	if err != nil {

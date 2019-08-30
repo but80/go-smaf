@@ -19,9 +19,8 @@ type VM3VoiceLib struct {
 func (lib *VM3VoiceLib) Read(rdr io.Reader, rest *int) error {
 	lib.Programs = []*VM35VoicePC{}
 	for pc := 0; pc < 128 && 0 < *rest; pc++ {
-		voice := &VM35VoicePC{Version: VM35FMVoiceVersion_VM3Lib}
-		err := voice.Read(rdr, rest)
-		if err != nil {
+		voice := &VM35VoicePC{Version: VM35FMVoiceVersionVM3Lib}
+		if err := voice.Read(rdr, rest); err != nil {
 			return errors.WithStack(err)
 		}
 		lib.Programs = append(lib.Programs, voice)
@@ -46,7 +45,9 @@ func NewVM3VoiceLib(file string) (*VM3VoiceLib, error) {
 	defer fh.Close()
 
 	var hdr chunkHeader
-	err = binary.Read(fh, binary.BigEndian, &hdr)
+	if err := binary.Read(fh, binary.BigEndian, &hdr); err != nil {
+		return nil, errors.WithStack(err)
+	}
 	if hdr.Signature != 'F'<<24|'M'<<16|'M'<<8|'3' {
 		return nil, errors.Errorf(`Header signature must be "FMM3"`)
 	}
@@ -54,8 +55,7 @@ func NewVM3VoiceLib(file string) (*VM3VoiceLib, error) {
 	total := int(hdr.Size) + int(unsafe.Sizeof(hdr))
 	rest := int(hdr.Size)
 	lib := &VM3VoiceLib{}
-	err = lib.Read(fh, &rest)
-	if err != nil {
+	if err := lib.Read(fh, &rest); err != nil {
 		return lib, errors.Wrapf(err, "at 0x%X bytes", total-rest)
 	}
 

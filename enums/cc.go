@@ -5,46 +5,46 @@ import "fmt"
 type CC int
 
 const (
-	CC_BankSelectMSB = 0
-	CC_Modulation    = 1
-	CC_DataEntry     = 6
-	CC_MainVolume    = 7
-	CC_Panpot        = 10
-	CC_Expression    = 11
-	CC_BankSelectLSB = 32
-	CC_RPNLSB        = 100
-	CC_RPNMSB        = 101
-	CC_AllSoundOff   = 120
-	CC_MonoOn        = 126
-	CC_PolyOn        = 127
+	CCBankSelectMSB = 0
+	CCModulation    = 1
+	CCDataEntry     = 6
+	CCMainVolume    = 7
+	CCPanpot        = 10
+	CCExpression    = 11
+	CCBankSelectLSB = 32
+	CCRPNLSB        = 100
+	CCRPNMSB        = 101
+	CCAllSoundOff   = 120
+	CCMonoOn        = 126
+	CCPolyOn        = 127
 )
 
 func (cc CC) String() string {
 	s := "unknown"
 	switch cc {
-	case CC_BankSelectMSB:
+	case CCBankSelectMSB:
 		s = "BankSelectMSB"
-	case CC_Modulation:
+	case CCModulation:
 		s = "Modulation"
-	case CC_DataEntry:
+	case CCDataEntry:
 		s = "DataEntry"
-	case CC_MainVolume:
+	case CCMainVolume:
 		s = "MainVolume"
-	case CC_Panpot:
+	case CCPanpot:
 		s = "Panpot"
-	case CC_Expression:
+	case CCExpression:
 		s = "Expression"
-	case CC_BankSelectLSB:
+	case CCBankSelectLSB:
 		s = "BankSelectLSB"
-	case CC_RPNLSB:
+	case CCRPNLSB:
 		s = "RPNLSB"
-	case CC_RPNMSB:
+	case CCRPNMSB:
 		s = "RPNMSB"
-	case CC_AllSoundOff:
+	case CCAllSoundOff:
 		s = "AllSoundOff"
-	case CC_MonoOn:
+	case CCMonoOn:
 		s = "MonoOn"
-	case CC_PolyOn:
+	case CCPolyOn:
 		s = "PolyOn"
 	}
 	return fmt.Sprintf("%s(%d)", s, int(cc))

@@ -8,9 +8,9 @@ import (
 
 // DefaultPC は、未定義の音色をロードしようとしたときに返されるデフォルト音色です。
 var DefaultPC = &VM35VoicePC{
-	Version:   VM35FMVoiceVersion_VM5,
+	Version:   VM35FMVoiceVersionVM5,
 	Name:      "default",
-	VoiceType: VoiceType_FM,
+	VoiceType: VoiceTypeFM,
 	FmVoice: &VM35FMVoice{
 		Panpot: 15,
 		Bo:     1,
@@ -102,8 +102,8 @@ func normalizeString(ok *bool, target *string, def string) {
 func (pc *VM35VoicePC) Normalize() bool {
 	ok := true
 
-	if pc.Version < VM35FMVoiceVersion_VM35FMVoiceVersion_MIN || VM35FMVoiceVersion_VM35FMVoiceVersion_MAX < pc.Version {
-		pc.Version = VM35FMVoiceVersion_VM5
+	if pc.Version < VM35FMVoiceVersionVM35FMVoiceVersionMIN || VM35FMVoiceVersionVM35FMVoiceVersionMAX < pc.Version {
+		pc.Version = VM35FMVoiceVersionVM5
 		ok = false
 	}
 	normalizeString(&ok, &pc.Name, "(undefined)")
@@ -111,12 +111,12 @@ func (pc *VM35VoicePC) Normalize() bool {
 	normalizeUint32(&ok, &pc.BankLsb, 0, 127)
 	normalizeUint32(&ok, &pc.Pc, 0, 127)
 	normalizeUint32(&ok, &pc.DrumNote, 0, 127)
-	if pc.VoiceType < VoiceType_VoiceType_MIN || VoiceType_VoiceType_MAX < pc.VoiceType {
-		pc.VoiceType = VoiceType_FM
+	if pc.VoiceType < VoiceTypeVoiceTypeMIN || VoiceTypeVoiceTypeMAX < pc.VoiceType {
+		pc.VoiceType = VoiceTypeFM
 		ok = false
 	}
 	switch pc.VoiceType {
-	case VoiceType_FM:
+	case VoiceTypeFM:
 		if pc.FmVoice == nil {
 			pc.FmVoice = &VM35FMVoice{}
 			ok = false
@@ -124,7 +124,7 @@ func (pc *VM35VoicePC) Normalize() bool {
 		if !pc.FmVoice.Normalize() {
 			ok = false
 		}
-	case VoiceType_PCM:
+	case VoiceTypePCM:
 		if pc.PcmVoice == nil {
 			pc.PcmVoice = &VM35PCMVoice{}
 			ok = false
@@ -132,8 +132,8 @@ func (pc *VM35VoicePC) Normalize() bool {
 		if !pc.PcmVoice.Normalize() {
 			ok = false
 		}
-	case VoiceType_AL:
-		pc.VoiceType = VoiceType_FM
+	case VoiceTypeAL:
+		pc.VoiceType = VoiceTypeFM
 		pc.FmVoice = &VM35FMVoice{}
 		ok = false
 	}

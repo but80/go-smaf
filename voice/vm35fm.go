@@ -10,18 +10,18 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/log"
 	pb "github.com/but80/go-smaf/v2/pb/smaf"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 
 type VM35FMVoiceVersion int
 
 const (
-	VM35FMVoiceVersion_VM3Lib VM35FMVoiceVersion = iota
-	VM35FMVoiceVersion_VM3Exclusive
-	VM35FMVoiceVersion_VM5
+	VM35FMVoiceVersionVM3Lib VM35FMVoiceVersion = iota
+	VM35FMVoiceVersionVM3Exclusive
+	VM35FMVoiceVersionVM5
 )
 
 type VM35FMOperator struct {
@@ -180,7 +180,7 @@ func NewVM35FMVoice(data []byte, version VM35FMVoiceVersion) (*VM35FMVoice, erro
 		return nil, errors.Wrapf(err, "NewVM35FMVoice invalid data: %s (want %d, got %d bytes)", util.Hex(data), len(data)-rest, len(data))
 	}
 	switch version {
-	case VM35FMVoiceVersion_VM3Lib, VM35FMVoiceVersion_VM3Exclusive:
+	case VM35FMVoiceVersionVM3Lib, VM35FMVoiceVersionVM3Exclusive:
 		voice.ReadUnusedRest(rdr, &rest)
 	}
 	if rest != 0 {
@@ -209,7 +209,7 @@ func (v *VM35FMVoice) ToPB() *pb.VM35FMVoice {
 // Read は、バイト列を読み取ってパースした結果をこの構造体に格納します。
 func (v *VM35FMVoice) Read(rdr io.Reader, rest *int) error {
 	switch v.Version {
-	case VM35FMVoiceVersion_VM3Exclusive:
+	case VM35FMVoiceVersionVM3Exclusive:
 		//    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 		// ------------------------------------ Global
 		// +0 |       |PN4|LF1|SR3|RR3|AR3|TL5|  // bit0-3は1つ次のOpに作用
@@ -266,8 +266,8 @@ func (v *VM35FMVoice) Read(rdr io.Reader, rest *int) error {
 			fixed = append(fixed, raw[9+op*8:12+op*8]...)
 		}
 		rdr = bytes.NewReader(fixed)
-		rest_ := len(fixed)
-		rest = &rest_
+		restVal := len(fixed)
+		rest = &restVal
 	}
 
 	//          | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
@@ -364,10 +364,10 @@ func (v *VM35FMVoice) String() string {
 // NewDemoVM35FMVoice は、デモ音色として初期化された新しい VM35FMVoice を作成します。
 func NewDemoVM35FMVoice() *VM35FMVoice {
 	v := &VM35FMVoice{
-		Version:   VM35FMVoiceVersion_VM5,
-		DrumKey:   enums.Note_A3,
-		PANPOT:    enums.Panpot_Center,
-		BO:        enums.BasicOctave_Normal,
+		Version:   VM35FMVoiceVersionVM5,
+		DrumKey:   enums.NoteA3,
+		PANPOT:    enums.PanpotCenter,
+		BO:        enums.BasicOctaveNormal,
 		ALG:       enums.Algorithm(0),
 		Operators: [4]*VM35FMOperator{},
 	}

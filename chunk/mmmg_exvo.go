@@ -6,8 +6,8 @@ import (
 	"io"
 	"strings"
 
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/but80/go-smaf/v2/subtypes"
-	"github.com/but80/go-smaf/v2/util"
 	"github.com/pkg/errors"
 )
 

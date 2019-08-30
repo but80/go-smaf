@@ -10,7 +10,7 @@ import (
 	"unsafe"
 
 	"github.com/but80/go-smaf/v2/enums"
-	"github.com/but80/go-smaf/v2/util"
+	"github.com/but80/go-smaf/v2/internal/util"
 	"github.com/pkg/errors"
 )
 
@@ -247,8 +247,8 @@ func (v *VMAFMVoice) String() string {
 func (v *VMAFMVoice) ToVM35() *VM35FMVoice {
 	result := &VM35FMVoice{
 		DrumKey:   enums.Note(0),
-		PANPOT:    enums.Panpot_Center,
-		BO:        enums.BasicOctave_Normal,
+		PANPOT:    enums.PanpotCenter,
+		BO:        enums.BasicOctaveNormal,
 		LFO:       v.LFO,
 		PE:        false,
 		ALG:       v.ALG,

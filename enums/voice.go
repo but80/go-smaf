@@ -9,9 +9,9 @@ import (
 type VoiceType int
 
 const (
-	VoiceType_FM VoiceType = iota
-	VoiceType_PCM
-	VoiceType_AL
+	VoiceTypeFM VoiceType = iota
+	VoiceTypePCM
+	VoiceTypeAL
 )
 
 func (t VoiceType) String() string {
@@ -60,15 +60,14 @@ func (a Algorithm) String() string {
 func (a Algorithm) OperatorCount() int {
 	if int(a) < 2 {
 		return 2
-	} else {
-		return 4
 	}
+	return 4
 }
 
 type BasicOctave int
 
 const (
-	BasicOctave_Normal BasicOctave = 1
+	BasicOctaveNormal BasicOctave = 1
 )
 
 func (o BasicOctave) String() string {
@@ -101,20 +100,21 @@ func (o BasicOctave) NoteDiff() Note {
 type Panpot int
 
 const (
-	Panpot_Center Panpot = 15
+	PanpotCenter Panpot = 15
 )
 
 func (p Panpot) String() string {
 	v := int(p)
 	if v == 15 {
 		return "C"
-	} else if 0 <= v && v < 15 {
-		return fmt.Sprintf("L%d", 15-v)
-	} else if 15 < v && v < 32 {
-		return fmt.Sprintf("R%d", v-15)
-	} else {
-		return "undefined"
 	}
+	if 0 <= v && v < 15 {
+		return fmt.Sprintf("L%d", 15-v)
+	}
+	if 15 < v && v < 32 {
+		return fmt.Sprintf("R%d", v-15)
+	}
+	return "undefined"
 }
 
 type Multiplier int
@@ -122,7 +122,6 @@ type Multiplier int
 func (m Multiplier) String() string {
 	if m == 0 {
 		return "1/2"
-	} else {
-		return fmt.Sprintf("%d", m)
 	}
+	return fmt.Sprintf("%d", m)
 }
